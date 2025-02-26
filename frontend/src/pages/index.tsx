@@ -1,7 +1,9 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Alert from '@mui/material/Alert';
+
 import AppBar from "@/components/AppBar";
+import InputSearch from "@/components/InputSearch";
+import Grid from '@mui/material/Grid2';
 
 export default function Home() {
   return (
@@ -13,13 +15,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar />
-             
-        <main className={styles.main}>
-          
-        </main>
-        <footer className={styles.footer}>
 
-        </footer>
+      <main className={styles.main}>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, sm: 12, md: 7, lg: 9 }}>
+            <h2>Funcionários</h2>
+          </Grid>
+          <Grid alignItems={"end"} size={{xs: 12,  sm: 12, md: 5, lg: 3 }}>
+            <InputSearch />
+          </Grid>
+        </Grid>
+        
+      </main>
+      <footer className={styles.footer}>
+
+      </footer>
     </>
   );
 }
