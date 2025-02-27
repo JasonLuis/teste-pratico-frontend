@@ -21,12 +21,13 @@ const SearchInput = styled(TextField)({
   },
 });
 
-export default function SearchBar() {
+export default function InputSearch({ onSearch }: { onSearch: (value: string) => void }) {
   return (
     <SearchInput
       variant="outlined"
       placeholder="Pesquisar"
       fullWidth
+      onChange={(e) => onSearch(e.target.value)} // 🔥 Chama a função ao digitar
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

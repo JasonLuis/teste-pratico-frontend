@@ -1,11 +1,19 @@
+
+import React, { useState } from "react";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 
 import AppBar from "@/components/AppBar";
 import InputSearch from "@/components/InputSearch";
 import Grid from '@mui/material/Grid2';
+import AppTable from "@/components/AppTable";
+import { Box } from "@mui/material";
+
 
 export default function Home() {
+
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <>
       <Head>
@@ -17,19 +25,19 @@ export default function Home() {
       <AppBar />
 
       <main className={styles.main}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems={"center"}>
           <Grid size={{ xs: 12, sm: 12, md: 7, lg: 9 }}>
             <h2>Funcionários</h2>
           </Grid>
           <Grid alignItems={"end"} size={{xs: 12,  sm: 12, md: 5, lg: 3 }}>
-            <InputSearch />
+            <InputSearch onSearch={setSearchTerm}/>
           </Grid>
         </Grid>
-        
+        <Box mt={4}>
+          <AppTable searchTerm={searchTerm}/>
+        </Box>
       </main>
-      <footer className={styles.footer}>
-
-      </footer>
+      <footer className={styles.footer}></footer>
     </>
   );
 }
