@@ -58,7 +58,7 @@ npm run test  # Executa os testes junto com o json-server
 │   │   ├── core
 │   │   │   ├── adapter  # Contém HttpAdapter
 │   │   │   ├── base  # Arquivos para uso do use case
-│   │   ├── modules  # Arquivos do use case
+│   │   ├── modules  # Arquivos do use case e testes unitários
 │   │   ├── shared  # Enums e helpers
 │   ├── ui  # Componentes e estilos
 │   ├── pages  # Páginas do Next.js
