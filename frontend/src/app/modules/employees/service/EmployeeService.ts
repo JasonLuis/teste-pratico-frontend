@@ -15,7 +15,7 @@ export class EmployeeService implements IEmployeeService {
     }
 
     async getAllEmployees(): Promise<EmployeeDto.GetAllEmployees.Response> {
-        const url = `${process.env.API_URL}/house_rules`;
+        const url = `http://localhost:3003/employees`;
 
         const res: Response<EmployeeDto.GetAllEmployees.Response> =
             await this.httpAdapter.get({
