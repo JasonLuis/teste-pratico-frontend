@@ -31,14 +31,16 @@ npm install  # ou yarn install
 ### 3️⃣ Inicie o json-server (API Fake) e o projeto
 
 ```sh
-npm run dev 
+npm run dev  # Inicia tanto o json-server quanto o projeto
 ```
 
 O json-server estará rodando na porta `http://localhost:3003`, e a API utilizada é `http://localhost:3003/employees`.
-O projeto estará rodando na porta `http://localhost:3000`.
-
 
 ### 4️⃣ Rode a aplicação
+
+```sh
+npm run dev  # Inicia tanto o json-server quanto o projeto
+```
 
 Acesse no navegador: `http://localhost:3000`
 
