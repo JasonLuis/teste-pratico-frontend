@@ -6,5 +6,5 @@ const httpAdapter = new HttpAdapter();
 
 const employeeService = new EmployeeService(httpAdapter);
 
-export const houseRuleUseCase = new GetAllEmployeesUseCase(employeeService);
+export const employeeUseCase = new GetAllEmployeesUseCase(employeeService);
 
