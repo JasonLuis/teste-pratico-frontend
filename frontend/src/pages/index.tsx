@@ -1,12 +1,12 @@
 
 import React, { useState } from "react";
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
+import styles from "@/ui/styles/Home.module.css";
 
-import AppBar from "@/components/AppBar";
-import InputSearch from "@/components/InputSearch";
+import AppBar from "@/ui/components/AppBar";
+import InputSearch from "@/ui/components/InputSearch";
 import Grid from '@mui/material/Grid2';
-import AppTable from "@/components/AppTable";
+import AppTable from "@/ui/components/AppTable";
 import { Box } from "@mui/material";
 
 

@@ -27,7 +27,7 @@ export default function InputSearch({ onSearch }: { onSearch: (value: string) =>
       variant="outlined"
       placeholder="Pesquisar"
       fullWidth
-      onChange={(e) => onSearch(e.target.value)} // 🔥 Chama a função ao digitar
+      onChange={(e) => onSearch(e.target.value)}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
