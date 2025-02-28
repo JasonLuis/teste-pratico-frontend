@@ -1,13 +1,21 @@
 import { AppError } from "@/app/core/base/AppError";
 import { Either } from "@/app/core/base/Either";
 import { Result } from "@/app/core/base/Result";
-import { EmployeeDto } from "@/app/modules/employees/service/EmployeeDto";
 
 export namespace GetAllEmployeeDto {
 
     export interface Request { }
+
+    export interface Employee {
+        id: number;
+        name: string;
+        job: string;
+        admission_date: string;
+        phone: string;
+        image: string;
+    }
     export interface ResponseBody {
-        employees: EmployeeDto.GetAllEmployees.Response
+        employees: Array<Employee>;
     }
 
     export type Response = Either<
