@@ -7,7 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Alert, Avatar } from '@mui/material';
+import { Avatar, LinearProgress } from '@mui/material';
+import { useEffect } from 'react';
+import { employeeUseCase } from '@/app/modules/employees/use-cases/GetAll';
+import { GetAllEmployeeDto } from '@/app/modules/employees/use-cases/GetAll/GetAllEmployeesDto';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
@@ -28,31 +31,58 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name: string, role: string, date: string, phone: string) {
-  return { name, role, date, phone };
-}
-
-const rows = [
-  createData("Ana Souza", "Designer", "10/02/2020", "11 9999-9999"),
-  createData("Carlos Lima", "Desenvolvedor", "15/07/2019", "21 9888-8888"),
-  createData("Bruna Costa", "Analista", "03/09/2021", "31 9777-7777"),
-  createData("Diego Alves", "Gerente", "22/05/2018", "41 9666-6666"),
-];
-
 export default function AppTable({ searchTerm }: { searchTerm: string }) {
-  
-  const filteredRows = rows.filter((row) => 
-    {
-      if(searchTerm === null || searchTerm === '') return row
-      return row.name.toLowerCase().includes(searchTerm.toLowerCase()) // 🔥 Filtrando os nomes
-    }
-  );
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [rows, setRows] = React.useState<GetAllEmployeeDto.Employee[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+      setIsLoading(true);
+      const res = await employeeUseCase.execute(undefined);
+      setIsLoading(false);
+      if (res.isRight()) {
+        const value = res.value.getValue();
+        const data: GetAllEmployeeDto.Employee[] = value.employees;
+        setRows(data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const normalizeString = (str: string) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toLowerCase();
+  };
+
+  const normalizedSearchTerm = normalizeString(searchTerm);
+
+  const filteredRows = rows
+    .map(
+      (employee) => ({
+        name: employee.name,
+        role: employee.job,
+        date: employee.admission_date,
+        phone: employee.phone, image: employee.image
+      })
+    )
+    .filter(
+      (row) =>
+        normalizeString(row.name).includes(normalizedSearchTerm) || 
+        normalizeString(row.role).includes(normalizedSearchTerm) || 
+        normalizeString(row.phone).includes(normalizedSearchTerm)
+    );
+
+
   return (
     <TableContainer component={Paper} sx={{ borderRadius: '8px' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>FOTO</StyledTableCell>
+            <StyledTableCell align="center">FOTO</StyledTableCell>
             <StyledTableCell align="center">NOME</StyledTableCell>
             <StyledTableCell align="center">CARGO</StyledTableCell>
             <StyledTableCell align="center">DATA DE ADMISSÃO</StyledTableCell>
@@ -61,8 +91,14 @@ export default function AppTable({ searchTerm }: { searchTerm: string }) {
         </TableHead>
         <TableBody>
 
-          
-          {filteredRows.length === 0 ? (
+          {isLoading ? 
+          (
+            <StyledTableRow>
+              <StyledTableCell colSpan={5} align="center">
+                <LinearProgress />
+              </StyledTableCell>
+            </StyledTableRow>
+          ): filteredRows.length === 0 ? (
             <StyledTableRow>
               <StyledTableCell colSpan={5} align="center">
                 Nenhum funcionário encontrado
@@ -70,15 +106,15 @@ export default function AppTable({ searchTerm }: { searchTerm: string }) {
             </StyledTableRow>
           ) : (
             filteredRows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                <Avatar alt="Remy Sharp" src="https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg" />
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.name}</StyledTableCell>
-              <StyledTableCell align="center">{row.role}</StyledTableCell>
-              <StyledTableCell align="center">{row.date}</StyledTableCell>
-              <StyledTableCell align="center">{row.phone}</StyledTableCell>
-            </StyledTableRow>
+              <StyledTableRow key={row.name}>
+                <StyledTableCell align="center" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <Avatar alt="Remy Sharp" src={row.image} />
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.name}</StyledTableCell>
+                <StyledTableCell align="center">{row.role}</StyledTableCell>
+                <StyledTableCell align="center">{row.date}</StyledTableCell>
+                <StyledTableCell align="center">{row.phone}</StyledTableCell>
+              </StyledTableRow>
             ))
           )}
         </TableBody>
