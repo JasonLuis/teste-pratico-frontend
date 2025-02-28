@@ -1,6 +1,6 @@
-# 📌 Nome do Projeto
+# 📌 Teste Prático Front-end
 
-Um breve resumo do que o projeto faz.
+Este projeto é uma aplicação frontend desenvolvida com [Next.js](https://nextjs.org) e [Material-UI](https://mui.com). Ele tem como objetivo fornecer uma interface de usuário moderna e responsiva para a gestão de funcionários, permitindo a visualização, busca e filtragem de dados de funcionários.
 
 ## 🚀 Sobre o Projeto
 
